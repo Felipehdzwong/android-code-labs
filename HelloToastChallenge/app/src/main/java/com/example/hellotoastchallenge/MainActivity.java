@@ -1,10 +1,8 @@
-package com.example.hellotoast;
+package com.example.hellotoastchallenge;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
