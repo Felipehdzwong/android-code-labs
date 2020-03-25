@@ -1,20 +1,21 @@
 package com.example.mapmanager;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
-    private GoogleMap mMap;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        map = googleMap;
+
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.getUiSettings().setZoomControlsEnabled(true);
+
+        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+                public void onMapClick(LatLng latLng) {
+                map.addMarker(new MarkerOptions().position(latLng).title("New Location"));
+                map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            }
+        });
+        map.setOnInfoWindowClickListener(this);
 
         // Add a marker in Sydney and move the camera
         LatLng saltillo = new LatLng(25.4232101, -101.0053024);
-        mMap.addMarker(new MarkerOptions().position(saltillo).title("Saltillo Coahuila, Mexico"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(saltillo));
+        map.addMarker(new MarkerOptions().position(saltillo).title("Saltillo Coahuila, Mexico"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(saltillo));
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info!", Toast.LENGTH_SHORT).show();
     }
 }
