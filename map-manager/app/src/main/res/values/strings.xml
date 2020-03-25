@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Map Manager</string>
     <string name="title_activity_maps">Map</string>
+    <string name="btn_txt_clear_map">Clear Map</string>
 </resources>

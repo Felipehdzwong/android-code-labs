@@ -3,6 +3,8 @@ package com.example.mapmanager;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,8 +25,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.activity_maps_fr_map);
         mapFragment.getMapAsync(this);
+
+        Button btnClearMap = findViewById(R.id.activity_maps_btn_clear_map);
+        btnClearMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.clear();
+            }
+        });
     }
 
 
@@ -53,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         map.setOnInfoWindowClickListener(this);
 
-        // Add a marker in Sydney and move the camera
+        // Add a marker in Saltillo and move the camera
         LatLng saltillo = new LatLng(25.4232101, -101.0053024);
         map.addMarker(new MarkerOptions().position(saltillo).title("Saltillo Coahuila, Mexico"));
         map.moveCamera(CameraUpdateFactory.newLatLng(saltillo));
