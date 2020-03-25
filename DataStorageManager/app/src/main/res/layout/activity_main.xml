@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -12,7 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/default_text" />
+        android:text="@string/default_text"
+        app:layout_constraintBottom_toTopOf="@+id/edtTextUpdate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDataBase" />
 
     <EditText
         android:id="@+id/edtTextUpdate"
@@ -20,7 +26,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewHello"
         android:layout_centerHorizontal="true"
-        android:hint="@string/hint_text" />
+        android:autofillHints="Write something..."
+        android:hint="@string/hint_text"
+        android:inputType="none|text"
+        app:layout_constraintBottom_toTopOf="@+id/btnExternalStorage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDataBase" />
 
     <Button
         android:id="@+id/btnOk"
@@ -28,15 +41,23 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/edtTextUpdate"
         android:layout_toEndOf="@id/edtTextUpdate"
-        android:layout_toRightOf="@id/edtTextUpdate"
-        android:text="@android:string/ok" />
+        android:text="@android:string/ok"
+        app:layout_constraintBottom_toTopOf="@+id/btnExternalStorage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/edtTextUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/btnInternalStorage"
+        app:layout_constraintVertical_bias="0.54" />
 
     <Button
         android:id="@+id/btnInternalStorage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="@string/btn_internal_storage_text" />
+        android:text="@string/btn_internal_storage_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnDataBase"
@@ -44,14 +65,21 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btnInternalStorage"
         android:layout_centerHorizontal="true"
-        android:text="@string/btn_create_database_text" />
+        android:text="@string/btn_create_database_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnInternalStorage" />
 
     <Button
         android:id="@+id/btnExternalStorage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="@string/btn_external_storage_text" />
+        android:text="@string/btn_external_storage_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.906"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnGetFiles"
@@ -59,6 +87,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnOk"
         android:layout_centerHorizontal="true"
-        android:text="@string/btn_get_files_text" />
+        android:text="@string/btn_get_files_text"
+        app:layout_constraintBottom_toTopOf="@+id/btnExternalStorage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtTextUpdate" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
