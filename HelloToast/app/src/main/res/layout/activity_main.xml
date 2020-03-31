@@ -62,5 +62,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_toast"
+        app:layout_constraintVertical_bias="0.56"
         tools:ignore="RtlCompat" />
 </androidx.constraintlayout.widget.ConstraintLayout>
