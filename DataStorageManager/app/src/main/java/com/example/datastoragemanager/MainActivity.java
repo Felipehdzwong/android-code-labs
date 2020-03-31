@@ -11,18 +11,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String INTERNAL_STORAGE_FILENAME = "my-internal-file";
+    private static final String SHARED_PREFERENCES_FILENAME = "my-preferences-file";
+    private static final String UPDATE_INFO_KEY = "update-info";
+    private static final String EMPTY_STRING = "";
     private EditText etInfo;
     private TextView tvInfo;
-    private final static String SHARED_PREFERENCES_FILENAME = "my-preferences";
-    private final static String UPDATE_INFO_KEY = "update-info";
-    private static final String EMPTY_STRING = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final Button btnInternalStorage = findViewById(R.id.btnInternalStorage);
+        btnInternalStorage.setOnClickListener(this);
+
+        final Button btnCurrentFiles = findViewById(R.id.btnGetFiles);
+        btnCurrentFiles.setOnClickListener(this);
 
         final Button btnOk = findViewById(R.id.btnOk);
         btnOk.setOnClickListener(this);
@@ -43,9 +54,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.btnOk){
-            Log.i("btnOk", "btnOk clicked");
-            storeUpdateInfoIntoPreferences();
+        switch (v.getId()){
+            case R.id.btnOk:
+                Log.i("btnOk", "btnOk clicked");
+                storeUpdateInfoIntoPreferences();
+                break;
+            case R.id.btnInternalStorage:
+                storeUpdateInfoIntoInternalStorage();
+                break;
+            case R.id.btnGetFiles:
+                displayCurrentInternalFiles();
+                break;
+            default:
+                Log.w("Switch block", "No case matched");
+        }
+
+    }
+
+    private void displayCurrentInternalFiles() {
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] currentFiles = fileList();
+
+        for (String file : currentFiles) {
+            stringBuilder.append(file).append("\n");
+        }
+
+        Toast.makeText(this, stringBuilder.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    private void storeUpdateInfoIntoInternalStorage() {
+        String info = etInfo.getText().toString()+"\n";
+
+        if(updateInfoIsValid(info)){
+            try {
+                FileOutputStream fileOutputStream = openFileOutput(INTERNAL_STORAGE_FILENAME, MODE_APPEND);
+                fileOutputStream.write(info.getBytes());
+                fileOutputStream.close();
+                Toast.makeText(this, "Data saved in file", Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Log.w("Try-catch block","File was not found.");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.e("Try-catch block","Unable to write or close the file.");
+            }finally {
+                etInfo.setText(EMPTY_STRING);
+            }
+        }
+        else {
+            Toast.makeText(this, "Invalid data", Toast.LENGTH_SHORT).show();
         }
 
     }
