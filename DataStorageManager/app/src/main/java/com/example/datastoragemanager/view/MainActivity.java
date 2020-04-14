@@ -1,4 +1,4 @@
-package com.example.datastoragemanager;
+package com.example.datastoragemanager.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.datastoragemanager.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
