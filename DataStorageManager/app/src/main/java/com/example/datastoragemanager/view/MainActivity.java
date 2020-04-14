@@ -1,9 +1,10 @@
-package com.example.datastoragemanager;
+package com.example.datastoragemanager.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.room.Room;
 
 import android.Manifest;
 import android.content.SharedPreferences;
@@ -14,14 +15,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.datastoragemanager.R;
+import com.example.datastoragemanager.data.Student;
+import com.example.datastoragemanager.db.MdsdDb;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         etInfo = findViewById(R.id.edtTextUpdate);
         tvInfo = findViewById(R.id.textViewHello);
+
+        createDatabaseAndTableIfNotAvailable();
     }
 
     private void checkExternalStorageWritePermission() {
@@ -196,6 +203,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Invalid data", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private void createDatabaseAndTableIfNotAvailable(){
+        final MdsdDb db = Room.databaseBuilder(
+                getApplicationContext(),
+                MdsdDb.class,
+                "mdsd_db"
+        ).build();
+
+        final Student student = new Student("Peter", "South Korea");
+
+        Thread dbCreationThread = new Thread(){
+            @Override
+            public void run() {
+                db.getStudentDao().insertStudent(student);
+
+                List<Student> studentList = db.getStudentDao().getAll();
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for(Student student1 : studentList){
+                    stringBuilder.append(student1.toString()+"\n");
+                }
+
+                Log.i("Get Student: ", stringBuilder.toString());
+            }
+        };
+        dbCreationThread.start();
     }
 
     private boolean updateInfoIsValid(String info) {
