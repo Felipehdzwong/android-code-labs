@@ -10,8 +10,8 @@ import java.util.List;
 public interface StudentDao {
 
     @Insert
-    void InsertStudent(Student student);
+    void insertStudent(Student student);
 
     @Query("SELECT * from student")
-    List<Student> selectAll();
+    List<Student> getAll();
 }

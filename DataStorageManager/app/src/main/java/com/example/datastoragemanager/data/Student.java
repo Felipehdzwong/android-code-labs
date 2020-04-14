@@ -18,8 +18,7 @@ public class Student {
     @NonNull
     private String country;
 
-    public Student(int id, String name, String country) {
-        this.id = id;
+    public Student( String name, String country) {
         this.name = name;
         this.country = country;
     }
